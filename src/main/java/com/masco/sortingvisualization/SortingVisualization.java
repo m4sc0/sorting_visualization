@@ -143,6 +143,24 @@ public class SortingVisualization {
         });
     }
 
+    public void insertionSort() {
+        sort(() -> {
+            int n = series.getData().size();
+            for (int i = 1; i < n; ++i) {
+                int key = i;
+                int j = i - 1;
+
+                // Move elements of arr[0..i-1], that are greater than key,
+                // to one position ahead of their current position
+                while (j >= 0 && isGreater(j, key)) {
+                    switchBars(j, j + 1);
+                    j = j - 1;
+                }
+            }
+        });
+    }
+
+
     public void sort(SortingAlgorithm algorithm) {
         new Thread(() -> {
             try {
@@ -218,12 +236,6 @@ public class SortingVisualization {
                 }
             }
             paintBars(new Color(0, 1, 0, 1));
-            try {
-                Thread.sleep(wait * 10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            paintBars(Color.WHITE);
         }).start();
     }
 
@@ -268,10 +280,9 @@ public class SortingVisualization {
             switchBars(i, j);
             Thread.sleep(wait);
         } else {
-            setColor(i, new Color(0, 1, 0, 1));
-            setColor(j, new Color(0, 1, 0, 1));
+            setColor(i, Color.WHITE);
+            setColor(j, Color.WHITE);
         }
     }
-
 
 }

@@ -42,6 +42,11 @@ public class Main extends Application {
         root.getChildren().add(scrambleBtn);
         root.getChildren().add(bubbleSort);
         root.getChildren().add(checkBars);
+
+        Button insertionSortBtn = new Button("Insertion Sort");
+        insertionSortBtn.setOnAction(e -> visualizer.insertionSort());
+        styleButton(insertionSortBtn, 50, 100); // Adjusted the y-coordinate to avoid overlap with the previous button
+        root.getChildren().add(insertionSortBtn);
     }
 
     public void styleButton(Button btn, int x, int y) {
