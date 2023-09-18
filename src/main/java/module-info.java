@@ -10,6 +10,8 @@ module com.masco.sortingvisualization {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
 
-    opens com.masco.sortingvisualization to javafx.fxml;
-    exports com.masco.sortingvisualization;
+    exports main;
+    opens main to javafx.fxml;
+    exports main.com.masco;
+    opens main.com.masco to javafx.fxml;
 }
