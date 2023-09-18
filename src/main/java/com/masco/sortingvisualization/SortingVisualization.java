@@ -10,10 +10,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -22,16 +19,17 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class SortingVisualization {
-    public VBox root;
+    public AnchorPane root;
     public BarChart<String, Number> barChart;
     public XYChart.Series<String, Number> series;
     public CategoryAxis xAxis;
     public NumberAxis yAxis;
 
-    public SortingVisualization(VBox root) {
+    public SortingVisualization(AnchorPane root) {
         this.root = root;
         this.xAxis = new CategoryAxis();
         this.yAxis = new NumberAxis();
+        this.yAxis.setOpacity(0);
         this.barChart = new BarChart<>(xAxis, yAxis);
         this.series = new XYChart.Series<>();
     }
@@ -53,6 +51,10 @@ public class SortingVisualization {
             barChart.getData().add(series);
             addLayoutBoundsListener(numberOfBars);
             addScenePropertyListener(numberOfBars);
+
+            AnchorPane.setBottomAnchor(barChart, 0.0);
+            AnchorPane.setLeftAnchor(barChart, 0.0);
+            AnchorPane.setRightAnchor(barChart, 0.0);
 
             root.getChildren().add(barChart);
             styleBarChart();
@@ -142,24 +144,6 @@ public class SortingVisualization {
             }
         });
     }
-
-    public void insertionSort() {
-        sort(() -> {
-            int n = series.getData().size();
-            for (int i = 1; i < n; ++i) {
-                int key = i;
-                int j = i - 1;
-
-                // Move elements of arr[0..i-1], that are greater than key,
-                // to one position ahead of their current position
-                while (j >= 0 && isGreater(j, key)) {
-                    switchBars(j, j + 1);
-                    j = j - 1;
-                }
-            }
-        });
-    }
-
 
     public void sort(SortingAlgorithm algorithm) {
         new Thread(() -> {
